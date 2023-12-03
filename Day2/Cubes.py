@@ -1,33 +1,49 @@
-f = open("G:\\Github\AdventOfCode2023\Day2\Cubes.txt", "r")
-opened = f.read()
-games=[]
-list = []
-i = 1
-counter=0
-redCounter = 0
-blueCounter = 0
-greenCounter = 0
+with open("G:\\Github\\AdventOfCode2023\\Day2\\Cubes.txt", "r") as f:
+    games = f.read().split("Game")[1:]
 
+total = 0
+totalPowers = 0
+powerChecker = {'red': 0, 'green': 0, 'blue': 0}
+powerChecker['red']=0
+powerChecker['blue']=0
+powerChecker['green']=0
 
-for i in range(1,95):
-    mid = opened[i:].find("Game")
-    list.append(opened[:mid+i])
-    opened = opened[mid+i:]
-    i += 1
+for game in games:
+    gameId = game.split(":")[0].split()[-1]
+    game = game[game.find(":") + 1:]
+    powerChecker['red']=0
+    powerChecker['blue']=0
+    powerChecker['green']=0  
 
+    cubeCounts = {'red': 0, 'green': 0, 'blue': 0}
+    allowed = True
 
-for game in list:
-    colon = game.find(":")
-    findGame = game.find(" ")
-    id=game[findGame:colon].replace(" ",'')
-    games.append(id)
-    counter+=1
+    subsets = game.split(";")
+    for subset in subsets:
+        subset = subset.strip().split(",")        
+        for cube in subset:
+            cube = cube.strip().split()
+            if cube:
+                number = int(cube[0])
+                color = cube[1].lower()
+                cubeCounts[color] = number
 
+                if cubeCounts['red'] > 12 or cubeCounts['green'] > 13 or cubeCounts['blue'] > 14:
+                    allowed = False
+                    break               
+        print(cubeCounts['red'])
+        print(subset)
+        if cubeCounts['red'] > powerChecker['red']:
+            powerChecker['red'] = cubeCounts['red']
+        if cubeCounts['blue'] > powerChecker['blue']:
+            powerChecker['blue'] = cubeCounts['blue']
+        if cubeCounts['green'] > powerChecker['green']:
+            powerChecker['green'] = cubeCounts['green']        
+    totalPowers += powerChecker['blue']*powerChecker['green']*powerChecker['red']
+    print("GAMEID: ", gameId)
+    #print('SUBSET: ',subset)
+    #print('POWERCHECKER: ',powerChecker)   
+    #print("TOTALPOWERS: ",totalPowers) 
 
-for game in list:
-    while redCounter < len(games):
-        mid = game.find("red")
-        games[redCounter] = games[redCounter] +' '+ (game[mid:game.find("red")])
-        game = game[mid+redCounter:]
-        redCounter += 1
-print(games)
+    if allowed:
+        total += int(gameId)
