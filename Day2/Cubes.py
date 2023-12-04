@@ -20,19 +20,16 @@ for game in games:
 
     subsets = game.split(";")
     for subset in subsets:
-        subset = subset.strip().split(",")        
+        subset = subset.strip().split(",")
         for cube in subset:
             cube = cube.strip().split()
             if cube:
                 number = int(cube[0])
-                color = cube[1].lower()
+                color = cube[1].lower().replace(',','').replace(";",'')
                 cubeCounts[color] = number
 
                 if cubeCounts['red'] > 12 or cubeCounts['green'] > 13 or cubeCounts['blue'] > 14:
-                    allowed = False
-                    break               
-        print(cubeCounts['red'])
-        print(subset)
+                    allowed = False   
         if cubeCounts['red'] > powerChecker['red']:
             powerChecker['red'] = cubeCounts['red']
         if cubeCounts['blue'] > powerChecker['blue']:
@@ -40,10 +37,8 @@ for game in games:
         if cubeCounts['green'] > powerChecker['green']:
             powerChecker['green'] = cubeCounts['green']        
     totalPowers += powerChecker['blue']*powerChecker['green']*powerChecker['red']
-    print("GAMEID: ", gameId)
-    #print('SUBSET: ',subset)
-    #print('POWERCHECKER: ',powerChecker)   
-    #print("TOTALPOWERS: ",totalPowers) 
 
     if allowed:
         total += int(gameId)
+
+print(f"TOTAL: {total}\nPOWERS: {totalPowers}")
