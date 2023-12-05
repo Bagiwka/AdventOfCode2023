@@ -1,7 +1,6 @@
 f = open("G:\\Github\AdventOfCode2023\Day3\Engine.txt", "r")
 inp = f.read()
 list = []
-list.append(inp[:141])
 total = 0
 
 for i in range(0, 3, 1):
@@ -9,24 +8,27 @@ for i in range(0, 3, 1):
 
 def ActualSearch(line, location):
     number = ''
+    
     if line[location].isnumeric():
         index = 0
+        add=0
         while line[location + index].isnumeric():
             number = number + line[location + index]
             index += 1
-        index = 1
+            add=1
+        index = 0+add
         while line[location - index].isnumeric():
             number = line[location - index] + number
             index += 1
-    elif line[location - 1].isnumeric():
-        index = 1
-        while line[location - index].isnumeric():
-            number = line[location - index] + number
-            index += 1
-    elif line[location + 1].isnumeric():
+    elif line[location+1].isnumeric():
         index = 0
         while line[location + index].isnumeric():
             number = number + line[location + index]
+            index += 1
+    elif line[location-1].isnumeric():
+        index = 1
+        while line[location - index].isnumeric():
+            number = line[location - index] + number
             index += 1
 
     if number != '' and number.isnumeric() and type(number) == str:
@@ -38,19 +40,20 @@ def ActualSearch(line, location):
 
 def SearchForNumbers(location, middle):
     number = 0
-    for line in list:
-        if list.index(line) == middle + 1:
-            number += ActualSearch(line, location)
-        elif list.index(line) == middle - 1:
-            number += ActualSearch(line, location)
-        elif list.index(line) == middle:
+    for i, line in enumerate(list):
+        if i == middle + 1 or i == middle - 1 or i == middle:
             number += ActualSearch(line, location)
     return number
 
+
 for line in list:
+    print("INDEX: ", list.index(line), 'LINE: ', line)
+    index = 0
     for character in line:
         if character != '.' and not character.isnumeric() and character != '\n':
-            index = line.index(character)
             number = SearchForNumbers(index, list.index(line))
             total += number
-            print(total)
+            print("TOTAL: ", total)
+            print("CHAR: ", character)
+            print("NUM: ", number, "\n")
+        index += 1
