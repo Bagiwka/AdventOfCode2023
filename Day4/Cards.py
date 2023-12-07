@@ -24,8 +24,7 @@ for card in cards:
     cardsData.append(cardData)
 
 for card in cardsData:
-    amount = 1
-    for repetition in range(0, amount, 1):
+    for repetition in range(0, card["Amount"], 1):
         print(card)
         total = 0
         inputs = card["After"].split()
@@ -38,8 +37,6 @@ for card in cardsData:
             for element in cardsData:
                 if int(element["ID"]) == int(card["ID"])+i:
                     cardsData[cardsData.index(element)]["Amount"] += 1
-        amount = cardsData[cardsData.index(element)]["Amount"]
-        print(amount)
     print(total)
 
 finalAmount = 0
