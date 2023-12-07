@@ -3,7 +3,7 @@ inp = f.read()
 list = []
 total = 0
 
-for i in range(0, 140, 1):
+for i in range(0, 15, 1):
     list.append(inp[i * 141:(i + 1) * 141])
 
 def ActualSearch(line, location, again):
