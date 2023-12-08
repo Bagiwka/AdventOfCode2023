@@ -24,19 +24,18 @@ for card in cards:
     cardsData.append(cardData)
 
 for card in cardsData:
-    for repetition in range(0, card["Amount"], 1):
-        print(card)
-        total = 0
-        inputs = card["After"].split()
-        winners = card["Before"].split()
-        for number in inputs:
-            for win in winners:
-                if number == win:
-                    total += 1          
-        for i in range(1,total,1):
-            for element in cardsData:
-                if int(element["ID"]) == int(card["ID"])+i:
-                    cardsData[cardsData.index(element)]["Amount"] += 1
+    print(card)
+    total = 0
+    inputs = card["After"].split()
+    winners = card["Before"].split()
+    for number in inputs:
+        for win in winners:
+            if number == win:
+                total += 1          
+    for i in range(1,total+1,1):
+        for element in cardsData:
+            if int(element["ID"]) == int(card["ID"])+i:
+                cardsData[cardsData.index(element)]["Amount"] += 1 * card["Amount"]
     print(total)
 
 finalAmount = 0
