@@ -83,4 +83,5 @@ for line in list:
                 print("CHAR: ", character)
                 print("NUM: ", number, "\n")
         index += 1
-print(f"FINISHED\nTOTAL: {total}")
+print("FINISHED")
+print(f"TOTAL: {total}")
